@@ -1,0 +1,126 @@
+---
+title: "Aida"
+output: html_document
+runtime: shiny
+---
+
+
+#select input
+```{r select-input }
+library(shiny)
+
+selectInput (
+  
+  inputId='exampledropdown', label='please make a selection',
+  choices= list(
+    "value 1"= 1,
+    "value 2"= 2,
+    "value 3"= 3
+  )
+)
+
+```
+
+
+```{r print-select-input}
+renderPrint(input$exampledropdown)
+```
+
+#Slider input
+```{r slider-input, echo=FALSE}
+sliderInput(
+  inputId = 'sliderinput', label='this is a slider',
+  min=0, max=5, value =3
+
+)
+
+sliderInput(
+  inputId = 'sliderinputexample2', label='two-ended slider',
+  min=0, max=5, value =c(4,6)
+
+)
+```
+
+
+#checkbox Input
+```{r checkbox-input}
+#To create a checkbox
+checkboxInput(inputId = "Checkboxinput", 
+              label = "Single chexk box")
+#In order to create a multiple checkbox
+checkboxGroupInput(inputId = "Checkgroupsample",
+                   label= "multiplecheckbox",
+                   choices = list('A', 'B','C')
+            )
+
+```
+
+#Create radio buttons
+```{r radio buttons}
+radioButtons(inputId = 'Radiosample', 
+             label='please choose one',
+             choices = list('A', 'B','C')
+)
+
+```
+
+#Create date input
+```{r data input}
+dateInput( inputId = 'DateChoice',
+           label='date selector')
+#For select a multiple date
+dateRangeInput( inputId = 'dateRange',
+                label= 'please select date')
+
+dateRangeInput( inputId = 'dateRange2',
+                label= 'please select date',
+                format = 'mm/dd/yyyy')
+
+```
+
+##text input
+```{r}
+textInput(inputId = 'TextSample', label='Space to enter text' )
+
+textAreaInput(inputId = 'textareasample', label='area to enter text')
+
+passwordInput(inputId = 'passwordsample', label='protect your password')
+```
+
+# Render text
+
+```{r test input testing}
+textInput(inputId = 'texttosee', label='please enter some text')
+```
+
+```{r}
+renderPrint(input$texttosee)
+renderText(input$texttosee)
+```
+
+#Display data
+```{r render data}
+renderTable(mtcars)
+#to make an interactive table
+renderDataTable(mtcars)
+
+DT::renderDataTable (mtcars)
+```
+
+#Plotting
+```{r render plot}
+renderPlot(hist(mtcars$mpg))
+
+```
+
+```{r plot options}
+selectInput(inputId = 'Plotcolumn', label ='choose a column',choices=names(mtcars))
+
+sliderInput(inputId = 'breaks', label='choose number of break', min=5, max=50, value=30)
+```
+
+
+```{r user plot}
+renderPlot(hist(mtcars[, input$Plotcolumn], breaks = input$breaks))
+```
+
